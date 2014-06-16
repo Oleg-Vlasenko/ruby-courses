@@ -21,7 +21,7 @@ class Mail
   end
 
   def add_parcel(parcel)
-    @parcels << parcels
+    @parcels << parcel
   end
 
   def parcels_to_city(city)
