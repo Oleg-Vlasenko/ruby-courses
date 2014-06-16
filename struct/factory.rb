@@ -65,4 +65,8 @@ class Factory
       self.class_eval &block
     end
   end
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> a0524234bc5d97af073d41b294701b01c48c47f3
