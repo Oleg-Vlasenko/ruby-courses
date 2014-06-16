@@ -66,4 +66,3 @@ class Factory
     end
   end
 end
-\
