@@ -1,3 +1,5 @@
+require "codebreaker/version"
+
 module Codebreaker
   class Game
     ScoreData = Struct.new(:user, :attempts, :result)
