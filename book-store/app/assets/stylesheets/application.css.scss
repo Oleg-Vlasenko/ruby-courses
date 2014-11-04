@@ -1,0 +1,18 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "books";
+
+#books_amount {
+  width: 50px;
+}
+
+.my-side-navbox {
+  text-align: center;
+  height: 300px;
+  padding-top: 140px;
+}
+
+.my-side-arrow {
+  font-size: 2em;
+  color: #535353;
+}

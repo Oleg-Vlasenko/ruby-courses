@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Render</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container col-md-3 text_center">
+      <a class="navbar-brand">Header</a>
+    </div>
+
+    <div class="container col-md-3 text-center">
+      <ul class="nav navbar-nav">
+        <%= render_home_link %>
+        <%= render_shop_link %>
+      </ul>
+    </div>
+
+    <div class="container col-md-3 text_center">
+      <p class="navbar-text">CART</p>
+    </div>
+
+    <div class="container col-md-3 text_center">
+      <ul class="nav navbar-nav ">
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Orders</a></li>
+        <li><a href="#">Sign out</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<%= yield %>
+
+</body>
+</html>

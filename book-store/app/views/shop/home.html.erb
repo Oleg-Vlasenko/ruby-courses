@@ -1,0 +1,41 @@
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <h3 id="book-title">
+    <a href="<%= books_path(id: @book.id) %>"><%= @book.title %></a>
+    <small id="author-name">by <%= @book.author.name %></small>
+  </h3>
+</div>
+
+<div class="container">
+  <div class="col-md-1 my-side-navbox">
+    <a id="prev-book" href="<%= home_path(id: @prev_id) %>">
+      <span class="glyphicon glyphicon-chevron-left my-side-arrow"></span>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <img src="<%= image_path('big_book.jpg') %>" width="250" height="250" alt="...">
+  </div>
+  <div class="col-md-7">
+    <p id="book-description"><%= @book.description %></p>
+
+    <div class="container">
+      <form class="form-inline" role="form">
+        <label><h4 id="book-price">$<%= @book.price  %></h4></label>
+        <input type="text" id="books_amount" class="form-control" placeholder="1">
+        <button type="submit" class="btn btn-default">ADD TO CART</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-1 my-side-navbox">
+    <a href="<%= home_path(id: @next_id) %>" id="next-book">
+      <span class="glyphicon glyphicon-chevron-right my-side-arrow"></span>
+    </a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <h3>Welcome to our amazing Bookstore! Choose anything you wish, we'll ship it anywhere!</h3>
+  </div>
+  <div class="col-md-3"></div>
+</div>
