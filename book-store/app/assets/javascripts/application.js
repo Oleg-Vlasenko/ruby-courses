@@ -12,5 +12,21 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
+
+/*
+$(function () {
+
+  $('#rating-bar').on('click', 'input', function(event) {
+    var StarNum = parseInt($(this).next().attr('value'));
+    $('#rating').attr('value', StarNum);
+    for(i=1; i<=StarNum; i++) {
+      $('.rating-star[value = ' + i + ']').removeClass('empty').addClass('marked');
+    }
+    for(i=StarNum+1; i<=5; i++) {
+      $('.rating-star[value = ' + i + ']').removeClass('marked').addClass('empty');
+    }
+  });
+
+});
+ */

@@ -14,7 +14,7 @@ end
 
 customers = []
 10.times do
-  customers << Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, password: Faker::Lorem.characters(10))
+  customers << Customer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email, password_digest: Faker::Lorem.characters(10))
 end
 
 category = []
@@ -27,6 +27,6 @@ category << Category.create(title: 'Guide')
 74.times do
   book = Book.create(author: authors[Random.rand(0..9)], category: category[Random.rand(0..4)], title: Faker::Lorem.sentence(2).chop, description: Faker::Lorem.paragraph(10), price: Random.rand(5..20), stock: Random.rand(1..9))
   Random.rand(0..4).times do
-    Rating.create(book: book, customer: customers[Random.rand(0..9)], title: Faker::Lorem.sentence(2), rating_number: Random.rand(1..5), review: Faker::Lorem.paragraph(7))
+    Review.create(book: book, customer: customers[Random.rand(0..9)], title: Faker::Lorem.sentence(2), rating: Random.rand(1..5), review_text: Faker::Lorem.paragraph(7))
   end
 end

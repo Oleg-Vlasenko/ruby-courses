@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Customer, :type => :model do
+  # Rewrite tests for authenticate functionality
   # Email, password, first_name, last_name fields should be required
   # Email should be unique
   # Should have many orders, ratings
@@ -53,7 +54,7 @@ RSpec.describe Customer, :type => :model do
     it 'customer should return self name' do
       expect(customer.name).to eq(customer.first_name + ' ' + customer.last_name)
     end
-
+    
     pending 'customer should be able to return a current order in progress'
   end
 

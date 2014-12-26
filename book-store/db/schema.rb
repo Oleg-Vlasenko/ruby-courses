@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021134322) do
+ActiveRecord::Schema.define(version: 20141226141633) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "address"
+    t.string   "zip_code"
+    t.string   "city"
+    t.string   "phone"
+    t.text     "type"
+    t.integer  "country_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "addresses", ["country_id"], name: "index_addresses_on_country_id"
 
   create_table "authors", force: true do |t|
     t.string   "first_name"
@@ -41,26 +54,83 @@ ActiveRecord::Schema.define(version: 20141021134322) do
     t.datetime "updated_at"
   end
 
+  create_table "countries", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "credit_cards", force: true do |t|
+    t.integer  "number"
+    t.integer  "CVV"
+    t.integer  "expiration_year"
+    t.integer  "expiration_month"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "credit_cards", ["customer_id"], name: "index_credit_cards_on_customer_id"
+
   create_table "customers", force: true do |t|
     t.string   "email"
-    t.string   "password"
+    t.string   "password_digest"
     t.string   "first_name"
     t.string   "last_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ratings", force: true do |t|
+  create_table "order_items", force: true do |t|
+    t.float    "price"
+    t.integer  "quantity"
+    t.float    "total_sum"
+    t.integer  "book_id"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_items", ["book_id"], name: "index_order_items_on_book_id"
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id"
+
+  create_table "orders", force: true do |t|
+    t.date     "completed_date"
+    t.string   "state"
+    t.integer  "shipping"
+    t.integer  "customer_id"
+    t.integer  "credit_card_id"
+    t.integer  "billing_address_id"
+    t.integer  "shipping_address_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["billing_address_id"], name: "index_orders_on_billing_address_id"
+  add_index "orders", ["credit_card_id"], name: "index_orders_on_credit_card_id"
+  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"
+  add_index "orders", ["shipping_address_id"], name: "index_orders_on_shipping_address_id"
+
+  create_table "reviews", force: true do |t|
     t.text     "title"
-    t.text     "review"
-    t.integer  "rating_number"
+    t.text     "review_text"
+    t.integer  "rating"
     t.integer  "book_id"
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "ratings", ["book_id"], name: "index_ratings_on_book_id"
-  add_index "ratings", ["customer_id"], name: "index_ratings_on_customer_id"
+  add_index "reviews", ["book_id"], name: "index_reviews_on_book_id"
+  add_index "reviews", ["customer_id"], name: "index_reviews_on_customer_id"
+
+  create_table "tests", force: true do |t|
+    t.string   "t1"
+    t.integer  "t2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

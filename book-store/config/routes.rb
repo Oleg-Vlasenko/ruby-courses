@@ -1,10 +1,24 @@
 Rails.application.routes.draw do
 
+  resources :tests
+
   root 'shop#home'
+
+  get 'auth', to: 'auth#index'
+  post 'auth', to: 'auth#sign_in', as: :sign_in
+  get 'auth/sign_out', as: :sign_out
+
+  resources :customers
+  resources :books, only: [:show] do
+    resources :reviews, only: [:new, :create]
+  end
+
   get 'home', to: 'shop#home'
   get 'shop', to: 'shop#index'
   get 'shop_by_ctg', to: 'shop#by_category'
-  get 'books', to: 'books#index'
+
+  resources :orders, only: [:update ,:index, :show]
+  post 'orders', to: 'orders#new_item', as: :new_order_item
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

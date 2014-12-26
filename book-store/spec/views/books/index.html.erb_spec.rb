@@ -24,7 +24,7 @@ RSpec.describe "books/index", :type => :view do
     render
   end
 
-  context 'renders book data' do
+  context 'book data' do
     it 'renders book title' do
       expect(rendered).to have_selector('#book-title', text: book.title)
     end
@@ -42,7 +42,7 @@ RSpec.describe "books/index", :type => :view do
     end
   end
 
-  context 'renders reviews' do
+  context 'reviews' do
     it 'renders rating' do
       expect(rendered).to have_selector('.rating > .star-checked')
     end

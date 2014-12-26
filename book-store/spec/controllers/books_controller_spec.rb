@@ -9,8 +9,8 @@ RSpec.describe BooksController, :type => :controller do
     Book.stub(:find_by_id).with(wrong_book_id).and_return(nil)
   end
 
-  describe 'Show book, GET index' do
-    it 'assign selected book' do
+  describe 'GET index' do
+    it 'assigns selected book' do
       get :index, id: book.id
       expect(assigns[:book]).to eq(book)
     end

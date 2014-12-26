@@ -1,0 +1,102 @@
+<div class="container">
+  <% if @order.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h3><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h3>
+
+      <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @new_item.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h3><%= pluralize(@new_item.errors.count, "error") %> prohibited to add book to order:</h3>
+
+      <ul>
+        <% @new_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<%= form_for(@order) do |f| %>
+  <div class="container">
+    <table id="order-table" class="table table-hover">
+      <thead>
+      <tr>
+        <th class="col-md-9 text-center" colspan="2">
+          <h3>
+            <small>BOOK</small>
+          </h3>
+        </th>
+        <th class="col-md-1 text-center">
+          <h3>
+            <small>PRICE</small>
+          </h3>
+        </th>
+        <th class="col-md-1 text-center">
+          <h3>
+            <small>QTY</small>
+          </h3>
+        </th>
+        <th class="col-md-1 text-center">
+          <h3>
+            <small>TOTAL</small>
+          </h3>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @order.items.each do |item| %>
+        <% item_num = item.new_record? ? "new_item_qty" : "item_#{item.id}_qty" %>
+        <tr>
+          <td class="col-md-2">
+            <img src="assets/book.jpeg" width="108  " height="108" alt="...">
+          </td>
+          <td class="col-md-7">
+            <h3><%= item.book.title %></h3>
+
+            <p><%= item.book.description %></p>
+          </td>
+          <td class="col-md-1 text-right">
+            <h3>$ <%= '%.2f' % item.price.to_f %></h3>
+          </td>
+          <td class="col-md-1">
+            <input id="<%= item_num %>" name="<%= item_num %>" type="text" class="form-control" value="<%= item.quantity %>">
+          </td>
+          <td class="col-md-1 text-right">
+            <h3>$ <%= '%.2f' % item.total_sum.to_f %></h3>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="col-md-12 text-right" colspan="5">
+          <h3>
+            <small>SUBTOTAL &nbsp</small>
+            $ <%= '%.2f' % @order.total_price %>
+          </h3>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="container">
+    <div class="col-md-7">
+      <button class="btn btn-default">EMPTY CART</button>
+      <button class="btn btn-default">CONTINUE SHOPPING</button>
+    </div>
+    <div class="col-md-2 text-right">
+      <input type="text" class="form-control" placeholder="Coupon code">
+    </div>
+    <div class="col-md-3 text-right">
+      <%= f.submit 'UPDATE', class: 'btn btn-default' %>
+      <button class="btn btn-default">CHECKUOT</button>
+    </div>
+  </div>
+  <div><h1></h1></div>
+<% end %>

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ShopController, :type => :controller do
 
-  describe 'Show shop, GET home' do
+  describe 'GET home' do
     let(:book) { mock_model('Book', id: '3') }
     let(:prev_book) { mock_model('Book', id: '2') }
     let(:next_book) { mock_model('Book', id: '4') }
@@ -32,7 +32,7 @@ RSpec.describe ShopController, :type => :controller do
     end
   end
 
-  describe 'Show shop, GET index' do
+  describe 'GET index' do
     let(:page_num) { 3 }
     let(:paginate) { Paginate.new }
 

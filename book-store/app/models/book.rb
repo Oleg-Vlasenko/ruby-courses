@@ -1,7 +1,7 @@
 class Book < ActiveRecord::Base
   belongs_to :author
   belongs_to :category
-  has_many :ratings
+  has_many :reviews
 
   validates :title, :price, :stock, presence: true
   validates :price, :stock, numericality: { greater_than: 0 }

@@ -4,6 +4,11 @@
 
 #books_amount {
   width: 50px;
+  display: inline-block;
+}
+
+#order-table td {
+  vertical-align: middle;
 }
 
 .my-side-navbox {
@@ -16,3 +21,38 @@
   font-size: 2em;
   color: #535353;
 }
+
+.no-padding-left {
+  padding-left: 0;
+}
+
+//rating stars
+.rating-bar input {
+  position: absolute;
+  filter: alpha(opacity=0);
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  opacity: 0;
+  width: 17px;
+}
+
+#rating-bar input {
+  cursor: pointer;
+}
+
+.rating-bar span {
+  width: 24px;
+  height: 16px;
+  line-height: 16px;
+  padding: 1px 22px 1px 0; /* 1px FireFox fix */
+  background: url(image_path('stars.png')) no-repeat 0 0;
+}
+
+.rating-bar .marked {
+  background-position: -22px 0;
+}
+
+.rating-bar .empty {
+  background-position: 0 0;
+}
+//+++

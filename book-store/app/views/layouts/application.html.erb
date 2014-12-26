@@ -8,6 +8,7 @@
 
 </head>
 <body>
+
 <div class="container">
   <nav class="navbar navbar-default" role="navigation">
     <div class="container col-md-3 text_center">
@@ -21,17 +22,36 @@
       </ul>
     </div>
 
-    <div class="container col-md-3 text_center">
-      <p class="navbar-text">CART</p>
-    </div>
+    <% if signed_in? %>
 
-    <div class="container col-md-3 text_center">
-      <ul class="nav navbar-nav ">
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Orders</a></li>
-        <li><a href="#">Sign out</a></li>
-      </ul>
-    </div>
+      <div class="container col-md-1 text-center">
+        <p class="navbar-text">CART</p>
+      </div>
+
+      <div class="container col-md-5">
+        <ul class="nav navbar-nav pull-right">
+          <li><a><small><em><strong>
+            <%= @current_customer.name %>
+          </strong></em></small></a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Orders</a></li>
+          <li><%= render_sign_out_link %>
+        </ul>
+      </div>
+
+    <% else %>
+
+      <div class="container col-md-4"></div>
+
+      <div class="container col-md-2">
+        <ul class="nav navbar-nav pull-right">
+          <li><%= render_sign_in_link %></li>
+          <li><%= render_register_link %></li>
+        </ul>
+      </div>
+
+    <% end %>
+
   </nav>
 </div>
 

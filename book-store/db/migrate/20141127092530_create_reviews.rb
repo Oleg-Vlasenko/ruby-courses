@@ -1,9 +1,9 @@
-class CreateRatings < ActiveRecord::Migration
+class CreateReviews < ActiveRecord::Migration
   def change
-    create_table :ratings do |t|
+    create_table :reviews do |t|
       t.text :title
       t.text :review
-      t.integer :rating_number
+      t.integer :rating
       t.references :book, index: true
       t.references :customer, index: true
 

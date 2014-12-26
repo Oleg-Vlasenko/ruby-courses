@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def signed_in?
+    !@current_customer.nil?
+  end
+
   def paginate_path(page_num)
     if params[:ctg]
       shop_by_ctg_path(page: page_num, ctg: params[:ctg])
@@ -45,15 +49,46 @@ module ApplicationHelper
   end
 
   def rating_star(number, rating_number)
-    options = number == rating_number ? { class: 'star-checked'} : nil
-    content_tag(:input, '', type: 'radio', name: 'rating', value: number.to_s) + content_tag(:span, '', options)
+    span_class = (number <= rating_number) ? 'marked' : 'empty'
+    span_class << ' rating-star'
+    content_tag(:span, '', class: span_class, value: number.to_s)
   end
 
   def render_rating_stars(rating_number)
-    content_tag(:div, class: 'rating') do
+    content_tag(:span, class: 'rating-bar') do
       5.times do |i|
-        concat rating_star(i + 1, rating_number)
+        concat content_tag(:input, '', type: 'radio')
+        concat rating_star(i+1, rating_number)
       end
     end
+  end
+
+  def render_editable_rating_stars(rating_number)
+    content_tag(:span, id: 'rating-bar', class: 'rating-bar') do
+      5.times do |i|
+        concat content_tag(:input, '', type: 'radio')
+        concat rating_star(i+1, rating_number)
+      end
+
+      concat content_tag(:input, '', { id: 'rating', name: 'review[rating]', hidden: true, value: rating_number.to_s })
+    end
+  end
+
+  def render_sign_in_link
+    content_tag(:a, 'Sign in', href: auth_path)
+  end
+
+  def render_register_link
+    content_tag(:a, 'Register', href: new_customer_path)
+  end
+
+  def render_sign_out_link
+    content_tag(:a, 'Sign out', href: sign_out_path)
+  end
+
+  def group_class(field_with_errors = false)
+    cls = 'field form-group'
+    cls.concat(' has-error') if field_with_errors
+    cls
   end
 end

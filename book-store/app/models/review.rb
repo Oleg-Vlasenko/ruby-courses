@@ -1,8 +1,9 @@
-class Rating < ActiveRecord::Base
+class Review < ActiveRecord::Base
   belongs_to :book
   belongs_to :customer
 
-  validates :rating_number, presence: true, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 5}
+  validates :rating, presence: true, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 5}
+  validates :title, :review_text, :book, :customer, presence: true
 
   # COLORS = [
   #     'red',
@@ -15,5 +16,4 @@ class Rating < ActiveRecord::Base
   # def validate_color
   #   COLORS.detect self.color
   # end
-
 end
