@@ -24,17 +24,19 @@
 
     <% if signed_in? %>
 
-      <div class="container col-md-1 text-center">
-        <p class="navbar-text">CART</p>
+      <div class="container col-md-2 text-center">
+        <ul class="nav navbar-nav">
+          <li><%= render_cart_link %>
+        </ul>
       </div>
 
-      <div class="container col-md-5">
+      <div class="container col-md-4">
         <ul class="nav navbar-nav pull-right">
           <li><a><small><em><strong>
             <%= @current_customer.name %>
           </strong></em></small></a></li>
           <li><a href="#">Settings</a></li>
-          <li><a href="#">Orders</a></li>
+          <li><%= render_orders_link %>
           <li><%= render_sign_out_link %>
         </ul>
       </div>

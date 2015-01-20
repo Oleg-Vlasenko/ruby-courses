@@ -13,12 +13,12 @@
       </div>
     <% end %>
     <%= form_tag(auth_path, method: 'post', id: 'auth-form') do %>
-      <div class="<%= group_class @customer.errors[:email].any? %>">
+      <div class="field form-group<%= " has-error" if @customer.errors[:email].any? %>">
         <%= label_tag :email %>
         <br>
         <%= text_field_tag :email, '', class: "form-control" %>
       </div>
-      <div class="<%= group_class @customer.errors[:password].any? %>">
+      <div class="field form-group<%= " has-error" if @customer.errors[:password].any? %>">
         <%= label_tag :password %>
         <br>
         <%= text_field_tag :password, '', class: "form-control", type: "password" %>

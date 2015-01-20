@@ -85,10 +85,13 @@ module ApplicationHelper
   def render_sign_out_link
     content_tag(:a, 'Sign out', href: sign_out_path)
   end
+  
+  def render_orders_link
+    content_tag(:a, 'Orders', href: orders_path)
+  end
 
-  def group_class(field_with_errors = false)
-    cls = 'field form-group'
-    cls.concat(' has-error') if field_with_errors
-    cls
+  def render_cart_link
+    cart_info = "CART #{@current_customer.get_current_order_info}"
+    content_tag(:a, cart_info, href: cart_path)
   end
 end

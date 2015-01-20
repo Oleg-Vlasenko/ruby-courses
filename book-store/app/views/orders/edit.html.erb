@@ -11,66 +11,73 @@
     </div>
   <% end %>
 
-  <% if @new_item.errors.any? %>
-    <div id="error_explanation" class="alert alert-danger" role="alert">
-      <h3><%= pluralize(@new_item.errors.count, "error") %> prohibited to add book to order:</h3>
+  <% @order.items.each do |item| %>
+    <% if item.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger" role="alert">
+        <h3><%= pluralize(item.errors.count, "error") %> prohibited order item <%= i.to_s %> from being saved:</h3>
 
-      <ul>
-        <% @new_item.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+        <ul>
+          <% item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
 <%= form_for(@order) do |f| %>
   <div class="container">
     <table id="order-table" class="table table-hover">
-      <thead>
-      <tr>
-        <th class="col-md-9 text-center" colspan="2">
-          <h3>
-            <small>BOOK</small>
-          </h3>
-        </th>
-        <th class="col-md-1 text-center">
-          <h3>
-            <small>PRICE</small>
-          </h3>
-        </th>
-        <th class="col-md-1 text-center">
-          <h3>
-            <small>QTY</small>
-          </h3>
-        </th>
-        <th class="col-md-1 text-center">
-          <h3>
-            <small>TOTAL</small>
-          </h3>
-        </th>
-      </tr>
+        <tr>
+          <th class="col-md-8 text-center" colspan="2">
+            <h3>
+              <small>BOOK</small>
+            </h3>
+          </th>
+          <th class="col-md-1 text-center">
+            <h3>
+              <small>PRICE</small>
+            </h3>
+          </th>
+          <th class="col-md-1 text-center">
+            <h3>
+              <small>QTY</small>
+            </h3>
+          </th>
+          <th class="col-md-1 text-center">
+            <h3>
+              <small>TOTAL</small>
+            </h3>
+          </th>
+          <th class="col-md-1">
+          </th>
+        </tr>
       </thead>
       <tbody>
       <% @order.items.each do |item| %>
-        <% item_num = item.new_record? ? "new_item_qty" : "item_#{item.id}_qty" %>
-        <tr>
+        <% item_num = item.new_record? ? "new_item" : "item_#{item.id}" %>
+        <input id="<%= "#{item_num}_book_id" %>" name="<%= "#{item_num}_book_id" %>" hidden="hidden" value="<%= item.book.id %>"/>
+        <input class="oi-del-flag" id="<%= "#{item_num}_del_flag" %>" name="<%= "#{item_num}_del_flag" %>" hidden="hidden" value="0"/>
+        <tr class="<%= 'has-error' if item.errors.any? %>">
           <td class="col-md-2">
-            <img src="assets/book.jpeg" width="108  " height="108" alt="...">
+            <img src="<%= image_path('book.jpeg') %>" width="108" height="108" alt="...">
           </td>
-          <td class="col-md-7">
+          <td class="col-md-6">
             <h3><%= item.book.title %></h3>
-
             <p><%= item.book.description %></p>
           </td>
           <td class="col-md-1 text-right">
-            <h3>$ <%= '%.2f' % item.price.to_f %></h3>
+            <h3>$<%= '%.2f' % item.price.to_f %></h3>
           </td>
           <td class="col-md-1">
-            <input id="<%= item_num %>" name="<%= item_num %>" type="text" class="form-control" value="<%= item.quantity %>">
+            <input id="<%= "#{item_num}_qty" %>" name="<%= "#{item_num}_qty" %>" type="text" class="form-control" value="<%= item.quantity %>">
           </td>
           <td class="col-md-1 text-right">
-            <h3>$ <%= '%.2f' % item.total_sum.to_f %></h3>
+            <h3>$<%= '%.2f' % item.total_sum.to_f %></h3>
+          </td>
+          <td class="col-md-1 text-right">
+            <button type="button" class="btn btn-default btn-sm oi-btn-del" del-flag-id="<%= "#{item_num}_del_flag" %>">X</button>
           </td>
         </tr>
       <% end %>
@@ -78,7 +85,7 @@
         <td class="col-md-12 text-right" colspan="5">
           <h3>
             <small>SUBTOTAL &nbsp</small>
-            $ <%= '%.2f' % @order.total_price %>
+            $<%= '%.2f' % @order.total_price %>
           </h3>
         </td>
       </tr>
@@ -87,16 +94,37 @@
   </div>
   <div class="container">
     <div class="col-md-7">
-      <button class="btn btn-default">EMPTY CART</button>
-      <button class="btn btn-default">CONTINUE SHOPPING</button>
+      <button type="button" id='btn-empty-cart' class="btn btn-default">EMPTY CART</button>
+      <button type="button" class="btn btn-default">CONTINUE SHOPPING</button>
     </div>
     <div class="col-md-2 text-right">
       <input type="text" class="form-control" placeholder="Coupon code">
     </div>
     <div class="col-md-3 text-right">
       <%= f.submit 'UPDATE', class: 'btn btn-default' %>
-      <button class="btn btn-default">CHECKUOT</button>
+      <button type="button" class="btn btn-default">CHECKUOT</button>
     </div>
   </div>
-  <div><h1></h1></div>
+  <div class="container">
+    <h1>&nbsp</h1>
+  </div>
+  
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+        </div>
+        <div class="modal-body">
+          <h3>Do you really want to empty cart?</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= f.submit 'Empty', class: 'btn btn-danger', name: 'empty_cart' %>
+        </div>
+      </div>
+    </div>
+  </div>  
+
 <% end %>

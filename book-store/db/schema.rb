@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226141633) do
+ActiveRecord::Schema.define(version: 20141218145336) do
 
   create_table "addresses", force: true do |t|
     t.string   "address"
@@ -125,12 +125,5 @@ ActiveRecord::Schema.define(version: 20141226141633) do
 
   add_index "reviews", ["book_id"], name: "index_reviews_on_book_id"
   add_index "reviews", ["customer_id"], name: "index_reviews_on_customer_id"
-
-  create_table "tests", force: true do |t|
-    t.string   "t1"
-    t.integer  "t2"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end

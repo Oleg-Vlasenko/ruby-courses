@@ -12,21 +12,32 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require_tree .
 
-/*
-$(function () {
 
+$(function () {
+  $(document)
+    .on('click', '.oi-btn-del', function () {
+      $(this).parents('tr').toggleClass('danger');
+      var del_flag_id = $(this).attr('del-flag-id');
+      $('#' + del_flag_id).val('1');
+    });
+    
   $('#rating-bar').on('click', 'input', function(event) {
     var StarNum = parseInt($(this).next().attr('value'));
     $('#rating').attr('value', StarNum);
-    for(i=1; i<=StarNum; i++) {
+    for(var i=1; i<=StarNum; i++) {
       $('.rating-star[value = ' + i + ']').removeClass('empty').addClass('marked');
     }
     for(i=StarNum+1; i<=5; i++) {
       $('.rating-star[value = ' + i + ']').removeClass('marked').addClass('empty');
     }
   });
+  
+  $('#btn-empty-cart').on('click', function(event){
+    $('#myModal').modal('show');
+  });
 
+  
 });
- */

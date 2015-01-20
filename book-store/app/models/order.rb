@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   @@states = [:in_progress, :completed, :shipped]
   @@default_state = @@states[0]
+  cattr_reader :states
 
   belongs_to :customer
   belongs_to :credit_card
@@ -8,7 +9,7 @@ class Order < ActiveRecord::Base
   belongs_to :shipping_address
   has_many :items, class_name: 'OrderItem'
 
-  after_initialize :set_default_state
+  before_validation :set_default_state
 
   validates :completed_date, presence: true, if: :completed?
   validates :state, presence: true
@@ -27,16 +28,26 @@ class Order < ActiveRecord::Base
 
     book = Book.find_by_id(book_id)
     new_item = self.items.new(book: book, price: book.price, quantity: quantity)
+    new_item.save
+    return new_item
   end
-
+  
+  def set_completed
+    self.state = @@states[1]
+  end
+  
+  def set_shipped
+    self.state = @@states[2]
+  end
+  
   private
 
   def set_default_state
-    self.state = @@default_state
+    self.state = @@default_state unless self.state
   end
 
   def completed?
-    self.state == @@states[1] || self.state == @@states[2]
+    self.state == @@states[1] or self.state == @@states[2]
   end
 
 end

@@ -30,3 +30,33 @@ category << Category.create(title: 'Guide')
     Review.create(book: book, customer: customers[Random.rand(0..9)], title: Faker::Lorem.sentence(2), rating: Random.rand(1..5), review_text: Faker::Lorem.paragraph(7))
   end
 end
+
+
+# tmp, debug customer orders
+def create_oi(customer, order, book)
+  
+  OrderItem.create(customer: customer, order: order, book: book, price: book.price, quantity: Random.rand(1..5))
+end
+
+c = Customer.last
+now = Date.current()
+b = Book.find(20)
+5.times do
+  # completed
+  o = Order.new(customer: c)
+  o.state = :completed
+  o.completed_date = now
+  o.save
+  Random.rand(2..8).times do
+    OrderItem.create(order: o, book: b, price: b.price, quantity: Random.rand(1..5))
+  end
+  
+  # shipped
+  o = Order.new(customer: c)
+  o.state = :shipped
+  o.completed_date = now
+  o.save
+  Random.rand(2..8).times do
+    OrderItem.create(order: o, book: b, price: b.price, quantity: Random.rand(1..5))
+  end
+end

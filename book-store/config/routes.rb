@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :tests
-
   root 'shop#home'
 
   get 'auth', to: 'auth#index'
@@ -18,6 +16,7 @@ Rails.application.routes.draw do
   get 'shop_by_ctg', to: 'shop#by_category'
 
   resources :orders, only: [:update ,:index, :show]
+  get 'cart', to: 'orders#edit'
   post 'orders', to: 'orders#new_item', as: :new_order_item
 
   # The priority is based upon order of creation: first created -> highest priority.

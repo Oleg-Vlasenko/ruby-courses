@@ -132,3 +132,10 @@ end
         <% end %>
 
 rails g scaffold Test t1:string t2:integer
+
+    update_errors = false
+    5.times do
+      p update_errors
+
+      update_errors = true unless update_errors
+    end
