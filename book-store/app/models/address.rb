@@ -1,6 +1,5 @@
 class Address < ActiveRecord::Base
-  has_many :orders
   belongs_to :country
 
-  validates :address, :phone, :zip_code, :city, :country, presence: true
+  validates :address, :phone, :zip_code, :city, :country, :first_name, :last_name, presence: true
 end

@@ -15,27 +15,27 @@
           </div>
         <% end %>
 
-        <div class="field form-group<%= " has-error" if @customer.errors[:email].any? %>">
+        <div class="field form-group<%= " field_with_errors" if @customer.errors[:email].any? %>">
           <%= f.label :email %>
           <br>
           <%= f.text_field :email, class: "form-control" %>
         </div>
-        <div class="field form-group<%= " has-error" if @customer.errors[:first_name].any? %>">
+        <div class="field form-group<%= " field_with_errors" if @customer.errors[:first_name].any? %>">
           <%= f.label :first_name %>
           <br>
           <%= f.text_field :first_name, class: "form-control" %>
         </div>
-        <div class="field form-group<%= " has-error" if @customer.errors[:last_name].any? %>">
+        <div class="field form-group<%= " field_with_errors" if @customer.errors[:last_name].any? %>">
           <%= f.label :last_name %>
           <br>
           <%= f.text_field :last_name, class: "form-control" %>
         </div>
-        <div class="field form-group<%= " has-error" if @customer.errors[:password].any? %>">
+        <div class="field form-group<%= " field_with_errors" if @customer.errors[:password].any? %>">
           <%= f.label :password %>
           <br>
           <%= f.text_field :password, class: "form-control", type: "password" %>
         </div>
-        <div class="field form-group<%= " has-error" if @customer.errors[:password_confirmation].any? %>">
+        <div class="field form-group<%= " field_with_errors" if @customer.errors[:password_confirmation].any? %>">
           <%= f.label :password_confirmation %>
           <br>
           <%= f.text_field :password_confirmation, class: "form-control", type: "password" %>

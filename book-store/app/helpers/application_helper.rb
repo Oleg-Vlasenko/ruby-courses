@@ -94,4 +94,8 @@ module ApplicationHelper
     cart_info = "CART #{@current_customer.get_current_order_info}"
     content_tag(:a, cart_info, href: cart_path)
   end
+  
+  def render_settings_link
+    content_tag(:a, 'Settings', href: settings_path)
+  end
 end

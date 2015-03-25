@@ -17,6 +17,6 @@ class ApplicationController < ActionController::Base
   end
 
   def only_auth_resource
-    @current_customer or not_found
+    @current_customer || not_found
   end
 end

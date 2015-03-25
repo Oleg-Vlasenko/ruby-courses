@@ -11,10 +11,10 @@
     </div>
   <% end %>
 
-  <% @order.items.each do |item| %>
+  <% @order.items.each_with_index do |item, idx| %>
     <% if item.errors.any? %>
       <div id="error_explanation" class="alert alert-danger" role="alert">
-        <h3><%= pluralize(item.errors.count, "error") %> prohibited order item <%= i.to_s %> from being saved:</h3>
+        <h3><%= pluralize(item.errors.count, "error") %> prohibited order item <%= idx.to_s %> from being saved:</h3>
 
         <ul>
           <% item.errors.full_messages.each do |message| %>
@@ -59,7 +59,7 @@
         <% item_num = item.new_record? ? "new_item" : "item_#{item.id}" %>
         <input id="<%= "#{item_num}_book_id" %>" name="<%= "#{item_num}_book_id" %>" hidden="hidden" value="<%= item.book.id %>"/>
         <input class="oi-del-flag" id="<%= "#{item_num}_del_flag" %>" name="<%= "#{item_num}_del_flag" %>" hidden="hidden" value="0"/>
-        <tr class="<%= 'has-error' if item.errors.any? %>">
+        <tr class="<%= 'field_with_errors' if item.errors.any? %>">
           <td class="col-md-2">
             <img src="<%= image_path('book.jpeg') %>" width="108" height="108" alt="...">
           </td>
@@ -95,7 +95,8 @@
   <div class="container">
     <div class="col-md-7">
       <button type="button" id='btn-empty-cart' class="btn btn-default">EMPTY CART</button>
-      <button type="button" class="btn btn-default">CONTINUE SHOPPING</button>
+      <%= f.submit 'CONTINUE SHOPPING', class: 'btn btn-default', name: 'to_root' %>
+      <!--<button type="button" class="btn btn-default">CONTINUE SHOPPING</button>-->
     </div>
     <div class="col-md-2 text-right">
       <input type="text" class="form-control" placeholder="Coupon code">

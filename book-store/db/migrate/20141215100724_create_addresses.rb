@@ -6,6 +6,8 @@ class CreateAddresses < ActiveRecord::Migration
       t.string :city
       t.string :phone
       t.text :type
+      t.text :first_name
+      t.text :last_name
       t.references :country, index: true
 
       t.timestamps

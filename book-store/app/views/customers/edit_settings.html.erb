@@ -1,0 +1,149 @@
+<div class="container">
+<%= form_tag(update_settings_path) do %>
+  <% if @customer.errors.any? || @customer.billing_address.errors.any? || @customer.shipping_address.errors.any? %>
+    <div class="container">
+      <div id="error_explanation" class="alert alert-danger" role="alert">
+        <h3>Errors prohibited this settings from being saved:</h3>
+        <ul>
+          <% if @customer.errors.any? %>
+            <strong>Customer:</strong>
+            <% @customer.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          <% end %>
+          
+          <% if @customer.billing_address.errors.any? %>
+            <strong>Billing address:</strong>
+            <% @customer.billing_address.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          <% end %>
+          
+          <% if @customer.shipping_address.errors.any? %>
+            <strong>Shippng address:</strong>
+            <% @customer.shipping_address.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+        <% end %>
+        </ul> 
+      </div>
+    </div>
+  <% end %>
+  
+  <div style="display:none">
+    <%= hidden_field_tag('customer[billing_address[id]]', @customer.billing_address.id) %>
+    <%= hidden_field_tag('customer[shipping_address[id]]', @customer.shipping_address.id) %>
+  </div>
+
+  <div class="container col-md-12">
+    <h3>Settings</h3>
+  </div>
+  
+  <div class="container col-md-6">
+    <h3 class="el-underlined">BILLING ADDRESS</h3>
+    <br>
+  </div>
+  <div class="container col-md-6">
+    <h3 class="el-underlined">SHIPPING ADDRESS</h3>
+    <br>
+  </div>
+
+  <div class="container col-md-4">
+    <div class="field form-group<%= " field_with_errors" if @customer.billing_address.errors[:first_name].any? %>">
+      <%= search_field('customer[billing_address]', :first_name, value: @customer.billing_address.first_name, class: 'form-control', placeholder: 'First name') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.billing_address.errors[:last_name].any? %>">
+      <%= search_field('customer[billing_address]', :last_name, value: @customer.billing_address.last_name, class: 'form-control', placeholder: 'Last name') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.billing_address.errors[:address].any? %>">
+      <%= search_field('customer[billing_address]', :address, value: @customer.billing_address.address, class: 'form-control', placeholder: 'Street Address') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.billing_address.errors[:city].any? %>">
+      <%= search_field('customer[billing_address]', :city, value: @customer.billing_address.city, class: 'form-control', placeholder: 'City') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.billing_address.errors.messages[:country] %>">
+      <% opt = options_for_select(Country.all.collect { |c| [c.name, c.id] }, @customer.billing_address.country_id) %>
+      <%= select_tag('customer[billing_address[country_id]]', opt, prompt: 'Select country', class: 'form-control', placeholder: 'Country') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.billing_address.errors[:zip_code].any? %>">
+      <%= search_field('customer[billing_address]', :zip_code, value: @customer.billing_address.zip_code, class: 'form-control', placeholder: 'Zip-code') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.billing_address.errors[:phone].any? %>">
+      <%= search_field('customer[billing_address]', :phone, value: @customer.billing_address.phone, class: 'form-control', placeholder: 'Phone') %>
+    </div>
+  </div>
+  <div class="container col-md-2"></div>
+  <div class="container col-md-4">
+    <div class="field form-group<%= " field_with_errors" if @customer.shipping_address.errors[:email].any? %>">
+      <%= search_field('customer[shipping_address]', :first_name, value: @customer.shipping_address.first_name, class: 'form-control', placeholder: 'First name') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.shipping_address.errors[:last_name].any? %>">
+      <%= search_field('customer[shipping_address]', :last_name, value: @customer.shipping_address.last_name, class: 'form-control', placeholder: 'Last name') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.shipping_address.errors[:address].any? %>">
+      <%= search_field('customer[shipping_address]', :address, value: @customer.shipping_address.address, class: 'form-control', placeholder: 'Street Address') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.shipping_address.errors[:city].any? %>">
+      <%= search_field('customer[shipping_address]', :city, value: @customer.shipping_address.city, class: 'form-control', placeholder: 'City') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.shipping_address.errors.messages[:country] %>">
+      <% opt = options_for_select(Country.all.collect { |c| [c.name, c.id] }, @customer.shipping_address.country_id) %>
+      <%= select_tag('customer[shipping_address[country_id]]', opt, prompt: 'Select country', class: 'form-control', placeholder: 'Country') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.shipping_address.errors[:zip_code].any? %>">
+      <%= search_field('customer[shipping_address]', :zip_code, value: @customer.shipping_address.zip_code, class: 'form-control', placeholder: 'Zip-code') %>
+    </div>
+    <div class="field form-group<%= " field_with_errors" if @customer.shipping_address.errors[:phone].any? %>">
+      <%= search_field('customer[shipping_address]', :phone, value: @customer.shipping_address.phone, class: 'form-control', placeholder: 'Phone') %>
+    </div>
+  </div>
+  <div class="container col-md-2"></div>
+
+  <div class="container col-md-12">
+    <br>
+  </div>
+
+  <div class="container col-md-6">
+    <h3 class="el-underlined">E-MAIL AND NAME</h3>
+    <br>
+  </div>
+  <div class="container col-md-6">
+    <h3 class="el-underlined">PASSWORD</h3>
+    <br>
+  </div>
+
+  <div class="container col-md-4">
+    <%= search_field(:customer, :email, class: 'form-control', placeholder: 'test@test.com') %>
+    <br>
+    <%= search_field(:customer, :first_name, class: 'form-control', placeholder: 'First name') %>
+    <br>
+    <%= search_field(:customer, :last_name, class: 'form-control', placeholder: 'Last name') %>
+    <br>
+  </div>
+  <div class="container col-md-2"></div>
+  <div class="container col-md-4">
+    <div class="<%= 'field_with_errors' if @customer.errors.messages[:authenticate] %>">
+      <%= label_tag('Old password') %>
+      <br>
+      <%= search_field(:password, :current, class: 'form-control', type: 'password', placeholder: 'type old password') %>
+      <br>
+      <%= label_tag('New password') %>
+      <br>
+      <%= search_field(:password, :new, class: 'form-control', type: 'password', placeholder: 'type new password') %>
+      <br>
+    </div>
+  </div>
+  
+  <div class="container col-md-12">
+    <p class="el-underlined"></p>
+  </div>
+  <div class="container col-md-12">
+    <br>
+    <%= submit_tag "SAVE SETTINGS", class: "btn btn-default" %>
+  </div>
+  <div class="container col-md-12">
+    <br><br>
+  </div>
+<% end %>
+
+</div>

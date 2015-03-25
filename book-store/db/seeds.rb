@@ -31,14 +31,13 @@ category << Category.create(title: 'Guide')
   end
 end
 
-
-# tmp, debug customer orders
-def create_oi(customer, order, book)
-  
-  OrderItem.create(customer: customer, order: order, book: book, price: book.price, quantity: Random.rand(1..5))
+10.times do
+  Country.create(name: Faker::Address.country)
 end
 
-c = Customer.last
+# admin, for authentication
+c = Customer.create(first_name: 'admin', last_name: Faker::Name.last_name, email: 'admin@adm.com', password: '1', password_confirmation: '1')
+
 now = Date.current()
 b = Book.find(20)
 5.times do

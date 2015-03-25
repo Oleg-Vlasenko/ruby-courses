@@ -1,12 +1,12 @@
 class Order < ActiveRecord::Base
-  @@states = [:in_progress, :completed, :shipped]
+  @@states = [:in_progress, 'completed', :shipped]
   @@default_state = @@states[0]
   cattr_reader :states
 
   belongs_to :customer
   belongs_to :credit_card
-  belongs_to :billing_address
-  belongs_to :shipping_address
+  belongs_to :billing_address, class_name: 'Address'
+  belongs_to :shipping_address, class_name: 'Address'
   has_many :items, class_name: 'OrderItem'
 
   before_validation :set_default_state
@@ -38,6 +38,10 @@ class Order < ActiveRecord::Base
   
   def set_shipped
     self.state = @@states[2]
+  end
+  
+  def group_items
+    
   end
   
   private

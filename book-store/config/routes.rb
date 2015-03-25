@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   post 'auth', to: 'auth#sign_in', as: :sign_in
   get 'auth/sign_out', as: :sign_out
 
-  resources :customers
+  resources :customers, only: [:new, :create]
+  get 'settings', to: 'customers#edit_settings'
+  post 'update_settings', to: 'customers#update_settings'
+  
   resources :books, only: [:show] do
     resources :reviews, only: [:new, :create]
   end

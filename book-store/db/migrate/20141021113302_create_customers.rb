@@ -5,6 +5,8 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :password_digest
       t.string :first_name
       t.string :last_name
+      t.references :billing_address, index: true
+      t.references :shipping_address, index: true
 
       t.timestamps
     end

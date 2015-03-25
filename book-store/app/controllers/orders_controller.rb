@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
   end
   
   def show
-    @order = Order.find_by_id(params[:id]) or not_found
+    @order = Order.find_by_id(params[:id]) || not_found
   end
   
   def edit
@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = Order.find_by_id(params[:id]) or not_found
+    @order = Order.find_by_id(params[:id]) || not_found
 
     @order.items.each do |item|
       item_num = item.new_record? ? "new_item" : "item_#{item.id}"
@@ -35,40 +35,34 @@ class OrdersController < ApplicationController
       end
     end
 
-    # not saved item
-    if params[:new_item_qty] && params[:new_item_del_flag] != '1'
-      @order.add_book(params[:new_item_book_id], params[:new_item_qty])
-    end
-
     is_valid = true
     @order.items.each do |item|
       next if item.destroyed?
       
-      item_num = item.new_record? ? "new_item" : "item_#{item.id}"
-      new_quantity = params["#{item_num}_qty"].to_i
+      new_quantity = params["item_#{item.id}_qty"].to_i
       if item.quantity != new_quantity
         item.quantity = new_quantity
+        item.save
       end
 
       is_valid = item.valid? if is_valid
     end
 
+    # new item
+    if params[:new_item_qty] && params[:new_item_del_flag] != '1'
+      new_item = @order.add_book(params[:new_item_book_id], params[:new_item_qty])
+      is_valid = new_item.valid? if is_valid
+    end
+
     if is_valid
-      @order.items.each do |item|
-        next if item.destroyed?
-  
-        item.save
-      end
-      
       redirect_to @order
-      
     else
       render :edit
     end
   end
   
   def empty_cart
-    @order = Order.find_by_id(params[:id]) or not_found
+    @order = Order.find_by_id(params[:id]) || not_found
     
     @order.items.each do |item|
       item.destroy
@@ -77,11 +71,26 @@ class OrdersController < ApplicationController
     redirect_to :root
   end
   
+  def checkout_address
+  end
+  
+  def update_checkout_address
+  end
+
+  def checkout_delivery
+  end
+  
+  def update_checkout_delivery
+  end
+  
   private
   
   def select_upd_action
-    empty_cart if params[:empty_cart]
+    if params[:empty_cart]
+      empty_cart 
+    elsif params[:to_root]
+      redirect_to :shop
+    end
   end
 
 end
-
